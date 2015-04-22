@@ -55,10 +55,27 @@ class EmailPage(Page):
         self.wait.until(EC.presence_of_all_elements_located((By.XPATH, ".//*[@class='dO']")))
         return self.driver.find_elements_by_xpath(".//*[@class='dO']")
 
+    def find_upload_by_file_name(self, file_name):
+        self.wait.until(EC.presence_of_all_elements_located((By.XPATH, ".//*[@class='vI' and text()='%s']" % file_name)))
+        return self.driver.find_elements_by_xpath(".//*[@class='vI' and text()='%s']" % file_name)
+
+    def find_upload_by_file_size(self, file_size_as_number):
+        self.wait.until(EC.presence_of_all_elements_located((By.XPATH, ".//*[@class='vJ' and starts-with(text(),'(%s')]" % file_size_as_number)))
+        return self.driver.find_elements_by_xpath(".//*[@class='vJ' and starts-with(text(),'(%s')]" % file_size_as_number)
+
     @property
     def sent_message(self):
         self.wait.until(EC.presence_of_all_elements_located((By.XPATH, ".//*[@class='vh']")))
         return self.driver.find_elements_by_xpath(".//*[@class='vh']")
+
+    def is_this_file(self, file_name):
+        try:
+            self.wait.until(EC.presence_of_element_located((By.XPATH, ".//*[text()='%s']" % file_name)))
+            return True
+        except NoSuchElementException:
+            return False
+        except TimeoutException:
+            return False
 
 
     @property

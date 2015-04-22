@@ -2,11 +2,13 @@
 from gmail.pages.internal_page import InternalPage
 from gmail.pages.login_page import LoginPage
 from gmail.pages.email_page import EmailPage
+from selenium.webdriver import ActionChains
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support.expected_conditions import *
 import time
 from selenium.webdriver.common.keys import Keys
+
 
 class Application(object):
     def __init__(self, driver, base_url):
@@ -119,6 +121,28 @@ class Application(object):
     def send_email(self):
         ep = self.email_page
         ep.send_button.click()
+
+    def open_received_email(self, email):
+        ip = self.internal_page
+        ip.open_email_received(email.subject)
+
+    def check_received_attachment_in_kb(self, file_name, file_size):
+        ep = self.email_page
+        assert ep.is_this_file(file_name)
+
+        ip = self.internal_page
+        ip.hover_on_attachment_by_file_name(file_name)
+        """
+        file_size_in_kb_exists = len(ip.attachment_size_in_kb(file_name, file_size)) > 0
+        assert file_size_in_kb_exists
+        """
+    def check_received_attachment_in_mb(self, file_name, file_size):
+        ep = self.email_page
+        assert ep.is_this_file(file_name)
+        ip = self.internal_page
+        ip.hover_on_attachment_by_file_name(file_name)
+        file_size_in_mb_exits = len(ip.attachment_size_in_mb(file_name, file_size)) > 0
+        assert file_size_in_mb_exits
 
     def logout(self):
         ip = self.internal_page

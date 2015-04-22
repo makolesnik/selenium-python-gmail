@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 import pytest
-from model.application import Application
+from gmail.model.application import Application
 from selenium import webdriver
 import csv
 import os
