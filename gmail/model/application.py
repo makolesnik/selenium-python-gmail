@@ -129,12 +129,11 @@ class Application(object):
     def check_received_attachment_in_kb(self, file_name, file_size):
         ep = self.email_page
         assert ep.is_this_file(file_name)
-
         ip = self.internal_page
         ip.hover_on_attachment_by_file_name(file_name)
         file_size_in_kb_exists = len(ip.attachment_size_in_kb(file_name, file_size)) > 0
         assert file_size_in_kb_exists
-        
+
     def check_received_attachment_in_mb(self, file_name, file_size):
         ep = self.email_page
         assert ep.is_this_file(file_name)
@@ -150,10 +149,3 @@ class Application(object):
 
     def ensure_is_not_logged_in(self):
         assert self.login_page.is_this_page
-
-
-
-
-
-
-
